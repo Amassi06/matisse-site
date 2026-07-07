@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import CtaCommander from '../components/CtaCommander.astro';
 import infos from '../data/infos.json';
 import photoDevanture from '../assets/photos/devanture-paris.webp';
+import { estRempli } from '../lib/utils';
 
 const titre = 'Nos restaurants — Matisse Paris 14e (Alésia) & Ivry-sur-Seine';
 const description =
@@ -110,6 +111,14 @@ const reseaux = [
           ))
         }
       </ul>
+      {
+        estRempli(infos.email) && (
+          <p class="restos-email">
+            Une question, une demande groupe ou traiteur ?{' '}
+            <a href={`mailto:${infos.email}`}>{infos.email}</a>
+          </p>
+        )
+      }
     </div>
   </section>
 </Base>
@@ -200,5 +209,10 @@ const reseaux = [
     padding: 0;
     font-weight: 700;
     font-size: var(--fs-500);
+  }
+
+  .restos-email {
+    margin-top: var(--esp-m);
+    color: var(--texte-2);
   }
 </style>

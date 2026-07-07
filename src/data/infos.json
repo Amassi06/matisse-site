@@ -2,6 +2,7 @@
   "nom": "Matisse",
   "slogan": "Hot & Fresh depuis 1998",
   "description": "Matisse, restaurants street food à Paris 14e (Alésia) et Ivry-sur-Seine : kebabs maison, bowls frais, smash burgers et frites maison. Sur place, à emporter ou en livraison.",
+  "email": "contact@matissefood.fr",
   "prixMoyen": "€€",
   "cuisines": ["Kebab", "Smash burger", "Bowls", "Street food"],
   "restaurants": [

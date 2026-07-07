@@ -20,6 +20,7 @@ const reseaux = [
         Kebabs, bowls et smash burgers préparés maison, à Paris 14<sup>e</sup> (Alésia) et
         Ivry-sur-Seine.
       </p>
+      {estRempli(infos.email) && <p><a href={`mailto:${infos.email}`}>{infos.email}</a></p>}
       {
         reseaux.length > 0 && (
           <ul class="pied__reseaux" aria-label="Réseaux sociaux">

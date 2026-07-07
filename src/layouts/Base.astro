@@ -51,6 +51,7 @@ const restaurantsLd = infos.restaurants.map((resto) => ({
   description: infos.description,
   url: Astro.site?.href,
   telephone: resto.telephoneIntl,
+  ...(estRempli(infos.email) && { email: infos.email }),
   priceRange: infos.prixMoyen,
   servesCuisine: infos.cuisines,
   image: ogImage.href,
