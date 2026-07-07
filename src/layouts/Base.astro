@@ -6,6 +6,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import infos from '../data/infos.json';
 import { estRempli } from '../lib/utils';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   titre: string;
@@ -117,6 +118,7 @@ const jsonLd = [...restaurantsLd, ...jsonLdExtra];
     <meta name="twitter:image:alt" content="Matisse — Hot & Fresh depuis 1998" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <SpeedInsights />
   </head>
   <body>
     <a class="evitement" href="#contenu-principal">Aller au contenu principal</a>
