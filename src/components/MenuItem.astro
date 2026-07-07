@@ -1,5 +1,5 @@
 ---
-import menu from '../data/menu.json';
+import { menu } from '../lib/menu';
 
 interface Props {
   nom: string;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { nom, prix, description = null, badges = [] } = Astro.props;
-const badgesMeta = menu.badges as Record<string, { emoji: string; label: string }>;
+const badgesMeta = menu.badges;
 const prixAffiche = `${prix.toFixed(2).replace('.', ',')} €`;
 ---
 

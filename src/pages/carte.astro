@@ -2,13 +2,13 @@
 import Base from '../layouts/Base.astro';
 import MenuItem from '../components/MenuItem.astro';
 import CtaCommander from '../components/CtaCommander.astro';
-import menu from '../data/menu.json';
+import { menu } from '../lib/menu';
 
 const titre = 'La carte — Matisse Paris 14e : kebabs, bowls, smash burgers';
 const description =
   'Découvrez la carte du restaurant Matisse à Paris 14e : kebabs et wraps dès 8,90 €, bowls frais, smash burgers, frites maison, tenders et desserts. Frites incluses avec les sandwichs et burgers.';
 
-const badgesMeta = menu.badges as Record<string, { emoji: string; label: string }>;
+const badgesMeta = menu.badges;
 
 // Données structurées schema.org : la carte complète avec prix
 const menuLd = {
