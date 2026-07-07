@@ -1,0 +1,156 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaCommander from '../components/CtaCommander.astro';
+
+const titre = 'Notre histoire — Matisse, street food inspirée par l’art à Paris 14e';
+const description =
+  'Pourquoi « Matisse » ? L’histoire d’un restaurant street food né d’un coup de cœur pour Henri Matisse, la cuisine du chef Stéphane Oulevy et nos producteurs locaux.';
+---
+
+<Base titre={titre} description={description}>
+  <header class="histoire-entete">
+    <div class="contenu">
+      <p class="surtitre">Notre histoire</p>
+      <h1>Pourquoi « Matisse » ?</h1>
+      <p class="histoire-chapo">
+        Une cuisine street food aussi créative, vibrante et colorée que l’œuvre qui lui a donné son
+        nom.
+      </p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="titre-origine">
+    <div class="contenu histoire-bloc">
+      <h2 id="titre-origine">Un nom inspiré par l’art</h2>
+      <p>
+        Le restaurant Matisse tire son nom du célèbre artiste français Henri Matisse. L’histoire
+        raconte qu’un jour, le fondateur du restaurant, grand amateur d’art, a visité une exposition
+        de Matisse et a été tellement inspiré par son usage de la couleur et de la lumière qu’il a
+        décidé de nommer son restaurant en son honneur.
+      </p>
+      <p>
+        Depuis lors, le restaurant Matisse s’est établi comme un lieu vivant de la street food à
+        Paris 14<sup>e</sup>. La cuisine est à l’image de l’art de Matisse : créative, vibrante et
+        colorée. Le décor du restaurant reflète également ces influences artistiques, avec des
+        couleurs vives soigneusement choisies pour compléter une ambiance chaleureuse et conviviale.
+      </p>
+      <p>
+        L’aventure s’est depuis étendue de l’autre côté du périphérique : une deuxième adresse
+        Matisse vous accueille à <strong>Ivry-sur-Seine</strong>, avec la même carte et le même
+        esprit maison.
+      </p>
+    </div>
+  </section>
+
+  <section class="section histoire-alt" aria-labelledby="titre-chef">
+    <div class="contenu histoire-bloc">
+      <h2 id="titre-chef">Le chef Stéphane Oulevy</h2>
+      <p>
+        Le restaurant Matisse est fier de collaborer avec le chef <strong>Stéphane Oulevy</strong>,
+        un expert culinaire renommé qui a apporté de nouvelles idées et de nouvelles saveurs à notre
+        menu. Grâce à sa créativité et à son expertise, le chef Oulevy a réussi à moderniser notre
+        carte tout en respectant la touche française.
+      </p>
+      <p>
+        Les recettes qu’il a créées sont élaborées à partir de produits frais et locaux, ce qui
+        garantit une expérience gustative exceptionnelle à nos clients : une cuisine raffinée,
+        délicate et originale qui satisfait tous les palais.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-produits">
+    <div class="contenu histoire-bloc">
+      <h2 id="titre-produits">Des produits frais, locaux</h2>
+      <p>
+        Chez Matisse, nous croyons que la qualité de nos ingrédients est essentielle pour offrir une
+        expérience culinaire exceptionnelle. C’est pourquoi nous travaillons chaque jour avec des
+        fournisseurs locaux pour obtenir des produits frais et de haute qualité.
+      </p>
+      <p>
+        Nous avons établi une relation de confiance avec notre primeur, qui nous livre des fruits et
+        légumes de saison tous les jours. Nos pommes de terre sont fraîches et coupées à la main sur
+        place pour préparer nos frites maison. Nos viandes sont choisies chaque jour chez notre
+        <strong>boucher voisin</strong>, puis marinées et préparées sur place — de la broche de
+        kebab, montée à la main et jamais surgelée, aux tenders panés maison. Nous sommes également
+        fiers de notre partenariat avec <strong>La Bonne Ménagère</strong>, une entreprise familiale
+        qui nous fournit des produits frais et laitiers de qualité.
+      </p>
+      <p>
+        Chez Matisse, nous sommes passionnés par la nourriture — et nous croyons que cela se
+        reflète dans chaque plat que nous servons. Venez goûter à la différence que des ingrédients
+        frais et de qualité peuvent faire !
+      </p>
+    </div>
+  </section>
+
+  <section class="section histoire-alt" aria-labelledby="titre-variete">
+    <div class="contenu histoire-bloc">
+      <h2 id="titre-variete">Une cuisine street food, aux inspirations multiples</h2>
+      <p>
+        Le restaurant Matisse est l’endroit idéal pour les amateurs de cuisine variée. Avec notre
+        sélection de plats et sandwichs uniques, vous pouvez satisfaire toutes vos envies : le
+        <strong>Kebab Berliner</strong>, notre kebab signature sur pain Berliner, le <strong
+          >smash burger</strong
+        > fait maison à la plancha, ou nos <strong>bowls</strong> frais et généreux.
+      </p>
+      <p>
+        Chez Matisse, nous sommes fiers de vous offrir un choix de plats de différents univers
+        culinaires, tout en gardant la qualité et le goût exceptionnels que vous attendez d’un
+        restaurant de street food de qualité.
+      </p>
+      <div class="histoire-cta">
+        <a class="btn btn--vert" href="/carte">Découvrir la carte</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-commander">
+    <div class="contenu histoire-bloc">
+      <h2 id="titre-commander">Venez nous voir</h2>
+      <p>
+        À Paris 14<sup>e</sup> (60 avenue du Général Leclerc, métro Alésia) et à Ivry-sur-Seine
+        (10 bis rue Barbès).
+      </p>
+      <CtaCommander />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .histoire-entete {
+    background: linear-gradient(160deg, var(--vert) 0%, var(--vert-fonce) 70%, var(--vert-nuit) 100%);
+    color: var(--creme);
+    padding-block: var(--esp-l);
+  }
+
+  .histoire-entete h1 {
+    color: #fff;
+  }
+
+  .histoire-entete .surtitre {
+    color: var(--jaune);
+  }
+
+  .histoire-chapo {
+    font-size: var(--fs-500);
+    color: rgb(250 246 236 / 0.9);
+    max-width: 42rem;
+  }
+
+  .histoire-alt {
+    background: var(--bg-2);
+  }
+
+  .histoire-bloc {
+    max-width: 48rem;
+  }
+
+  .histoire-bloc h2 {
+    color: var(--accent-contraste);
+  }
+
+  .histoire-cta {
+    margin-top: var(--esp-m);
+  }
+</style>

@@ -1,0 +1,111 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const titre = 'Blog — Matisse, actus et conseils street food à Paris 14e';
+const description =
+  'Le blog de Matisse : conseils pour composer votre repas, coulisses de nos recettes et bonnes adresses autour du restaurant, Paris 14e (Alésia).';
+
+const articles = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const formateurDate = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base titre={titre} description={description}>
+  <header class="blog-entete">
+    <div class="contenu">
+      <p class="surtitre">Le blog</p>
+      <h1>Actus &amp; conseils</h1>
+      <p class="blog-chapo">Nos plats, nos produits, notre quartier — les coulisses de Matisse.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="contenu">
+      <ul class="blog-grille">
+        {
+          articles.map((article) => (
+            <li class="blog-carte reveal">
+              <a href={`/blog/${article.id}`}>
+                <p class="blog-date">
+                  <time datetime={article.data.date.toISOString().slice(0, 10)}>
+                    {formateurDate.format(article.data.date)}
+                  </time>
+                </p>
+                <h2>{article.data.titre}</h2>
+                <p class="blog-extrait">{article.data.extrait}</p>
+                <span class="blog-lien" aria-hidden="true">Lire l’article →</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .blog-entete {
+    background: var(--bg-2);
+    padding-block: var(--esp-l);
+    border-bottom: 1px solid var(--ligne);
+  }
+
+  .blog-chapo {
+    font-size: var(--fs-500);
+    color: var(--texte-2);
+    max-width: 40rem;
+  }
+
+  .blog-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: var(--esp-m);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .blog-carte {
+    background: var(--surface);
+    border: 1px solid var(--ligne);
+    border-radius: var(--rayon-l);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+
+  .blog-carte:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--ombre);
+  }
+
+  .blog-carte a {
+    display: block;
+    padding: var(--esp-m);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .blog-date {
+    font-size: var(--fs-300);
+    color: var(--texte-2);
+    margin-bottom: var(--esp-xs);
+  }
+
+  .blog-carte h2 {
+    font-size: var(--fs-600);
+    text-transform: none;
+    margin-bottom: var(--esp-xs);
+  }
+
+  .blog-extrait {
+    color: var(--texte-2);
+    font-size: var(--fs-400);
+  }
+
+  .blog-lien {
+    font-weight: 700;
+    color: var(--orange);
+  }
+</style>

@@ -1,0 +1,246 @@
+---
+import Base from '../layouts/Base.astro';
+import MenuItem from '../components/MenuItem.astro';
+import CtaCommander from '../components/CtaCommander.astro';
+import menu from '../data/menu.json';
+
+const titre = 'La carte — Matisse Paris 14e : kebabs, bowls, smash burgers';
+const description =
+  'Découvrez la carte du restaurant Matisse à Paris 14e : kebabs et wraps dès 8,90 €, bowls frais, smash burgers, frites maison, tenders et desserts. Frites incluses avec les sandwichs et burgers.';
+
+const badgesMeta = menu.badges as Record<string, { emoji: string; label: string }>;
+
+// Données structurées schema.org : la carte complète avec prix
+const menuLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Menu',
+  '@id': new URL('/carte#menu', Astro.site).href,
+  name: 'La carte Matisse',
+  inLanguage: 'fr',
+  hasMenuSection: menu.sections.map((section) => ({
+    '@type': 'MenuSection',
+    name: section.titre,
+    ...(section.note && { description: section.note }),
+    hasMenuItem: section.groupes.flatMap((groupe) =>
+      groupe.items.map((item) => ({
+        '@type': 'MenuItem',
+        name: item.nom,
+        ...(item.description && { description: item.description }),
+        ...(item.badges.includes('vege') && {
+          suitableForDiet: 'https://schema.org/VegetarianDiet',
+        }),
+        offers: {
+          '@type': 'Offer',
+          price: item.prix.toFixed(2),
+          priceCurrency: 'EUR',
+        },
+      }))
+    ),
+  })),
+};
+---
+
+<Base titre={titre} description={description} jsonLdExtra={[menuLd]}>
+  <header class="carte-entete">
+    <div class="contenu">
+      <p class="surtitre">Hot &amp; Fresh depuis 1998</p>
+      <h1>La carte</h1>
+      <p class="carte-entete__intro">
+        Tout est préparé maison, avec des produits frais. Frites maison incluses avec les
+        sandwichs et les smash burgers.
+      </p>
+      <ul class="legende" aria-label="Légende des pictogrammes">
+        {
+          Object.values(badgesMeta).map((badge) => (
+            <li class="badge">
+              <span aria-hidden="true">{badge.emoji}</span> {badge.label}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="carte-allergenes">
+        Allergènes : la liste des 14 allergènes majeurs présents dans nos plats est disponible sur
+        simple demande au comptoir.
+      </p>
+    </div>
+  </header>
+
+  <nav class="carte-nav" aria-label="Sections de la carte">
+    <div class="contenu carte-nav__liste">
+      {menu.sections.map((section) => <a href={`#${section.id}`}>{section.titre}</a>)}
+    </div>
+  </nav>
+
+  <div class="contenu">
+    {
+      menu.sections.map((section) => (
+        <section id={section.id} class="carte-section" aria-labelledby={`titre-${section.id}`}>
+          <div class="carte-section__entete">
+            <h2 id={`titre-${section.id}`}>{section.titre}</h2>
+            {section.note && <p class="carte-section__note">{section.note}</p>}
+          </div>
+          {section.groupes.map((groupe) => (
+            <div class="carte-groupe reveal">
+              {groupe.titre && <h3 class="carte-groupe__titre">{groupe.titre}</h3>}
+              <div class="carte-groupe__items">
+                {groupe.items.map((item) => (
+                  <MenuItem
+                    nom={item.nom}
+                    prix={item.prix}
+                    description={item.description}
+                    badges={item.badges}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      ))
+    }
+
+    <aside class="carte-cta">
+      <h2>Une envie ? On s'occupe du reste.</h2>
+      <CtaCommander class="carte-cta__boutons" />
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .carte-entete {
+    background: var(--bg-2);
+    padding-block: var(--esp-l);
+    border-bottom: 1px solid var(--ligne);
+  }
+
+  .carte-entete__intro {
+    font-size: var(--fs-500);
+    color: var(--texte-2);
+  }
+
+  .legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-xs);
+    list-style: none;
+    margin: var(--esp-s) 0 0;
+    padding: 0;
+  }
+
+  .carte-allergenes {
+    margin: var(--esp-s) 0 0;
+    font-size: var(--fs-300);
+    color: var(--texte-2);
+  }
+
+  /* --- Navigation ancrée --- */
+  .carte-nav {
+    position: sticky;
+    top: 3.6rem;
+    z-index: 5;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--ligne);
+  }
+
+  .carte-nav__liste {
+    display: flex;
+    gap: var(--esp-m);
+    overflow-x: auto;
+    padding-block: 0.65rem;
+    scrollbar-width: thin;
+  }
+
+  .carte-nav a {
+    font-weight: 700;
+    font-size: var(--fs-300);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: var(--texte-2);
+    white-space: nowrap;
+    transition: color var(--transition);
+  }
+
+  .carte-nav a:hover {
+    color: var(--orange);
+  }
+
+  /* Sur mobile, le header (logo + nav repliée sur 2 lignes) est plus haut :
+     on décale la barre d'ancres et les cibles de scroll en conséquence. */
+  @media (max-width: 44rem) {
+    .carte-nav {
+      top: 7.3rem;
+    }
+
+    .carte-section {
+      scroll-margin-top: 10rem;
+    }
+  }
+
+  /* --- Sections --- */
+  .carte-section {
+    padding-block: var(--esp-l) var(--esp-m);
+    scroll-margin-top: 7.5rem;
+  }
+
+  .carte-section__entete {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--esp-s) var(--esp-m);
+    border-bottom: 3px solid var(--vert);
+    padding-bottom: var(--esp-xs);
+    margin-bottom: var(--esp-s);
+  }
+
+  .carte-section__entete h2 {
+    margin: 0;
+    color: var(--accent-contraste);
+  }
+
+  .carte-section__note {
+    margin: 0;
+    font-weight: 700;
+    color: var(--orange);
+    text-transform: uppercase;
+    font-size: var(--fs-200);
+    letter-spacing: 0.08em;
+  }
+
+  .carte-groupe__titre {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--texte-2);
+    margin: var(--esp-m) 0 var(--esp-xs);
+  }
+
+  .carte-groupe__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
+    column-gap: var(--esp-l);
+  }
+
+  /* --- CTA final --- */
+  .carte-cta {
+    margin-block: var(--esp-xl);
+    padding: var(--esp-l);
+    background: linear-gradient(150deg, var(--vert) 0%, var(--vert-fonce) 100%);
+    border-radius: var(--rayon-l);
+    color: #fff;
+    display: grid;
+    gap: var(--esp-s);
+    justify-items: center;
+    text-align: center;
+  }
+
+  .carte-cta h2 {
+    color: #fff;
+    margin: 0;
+    font-size: var(--fs-700);
+  }
+
+  .carte-cta :global(.btn--contour) {
+    color: #fff;
+  }
+</style>

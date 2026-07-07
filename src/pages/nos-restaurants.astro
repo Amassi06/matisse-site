@@ -1,0 +1,204 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import CtaCommander from '../components/CtaCommander.astro';
+import infos from '../data/infos.json';
+import photoDevanture from '../assets/photos/devanture-paris.webp';
+
+const titre = 'Nos restaurants — Matisse Paris 14e (Alésia) & Ivry-sur-Seine';
+const description =
+  'Les deux adresses Matisse : 60 avenue du Général Leclerc, Paris 14e (métro Alésia) et 10 bis rue Barbès, Ivry-sur-Seine. Horaires, téléphone, plan d’accès, sur place, à emporter ou en livraison.';
+
+const carteEmbed = (resto: (typeof infos.restaurants)[number]) => {
+  const adresse = `${resto.adresse.rue}, ${resto.adresse.codePostal} ${resto.adresse.ville}`;
+  return `https://www.google.com/maps?q=${encodeURIComponent(`${infos.nom} ${adresse}`)}&output=embed`;
+};
+const itineraire = (resto: (typeof infos.restaurants)[number]) => {
+  const adresse = `${resto.adresse.rue}, ${resto.adresse.codePostal} ${resto.adresse.ville}`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(adresse)}`;
+};
+
+const reseaux = [
+  { nom: 'Instagram', url: infos.reseaux.instagram },
+  { nom: 'Facebook', url: infos.reseaux.facebook },
+  { nom: 'TikTok', url: infos.reseaux.tiktok },
+];
+---
+
+<Base titre={titre} description={description}>
+  <header class="restos-entete">
+    <div class="contenu">
+      <p class="surtitre">On vous attend</p>
+      <h1>Nos restaurants</h1>
+      <p class="restos-chapo">
+        Deux adresses, la même cuisine maison : Paris 14<sup>e</sup> (Alésia) et Ivry-sur-Seine.
+      </p>
+    </div>
+  </header>
+
+  {
+    infos.restaurants.map((resto) => (
+      <section id={resto.id} class="section resto" aria-labelledby={`titre-${resto.id}`}>
+        <div class="contenu resto__grille">
+          <div class="resto__infos">
+            <h2 id={`titre-${resto.id}`}>{resto.nom}</h2>
+            <address class="resto__adresse">
+              {resto.adresse.rue}
+              <br />
+              {resto.adresse.codePostal} {resto.adresse.ville}
+            </address>
+            <p class="resto__acces">
+              <span aria-hidden="true">🚇</span> {resto.acces}
+            </p>
+
+            <h3>Horaires</h3>
+            <ul class="resto__horaires">
+              {resto.horaires.map((h) => (
+                <li>
+                  <strong>{h.jours}</strong> — {h.heures}
+                </li>
+              ))}
+            </ul>
+
+            <h3>Commander</h3>
+            <CtaCommander restaurant={resto} />
+
+            <p class="resto__itineraire">
+              <a class="btn btn--vert" href={itineraire(resto)} target="_blank" rel="noopener">
+                Itinéraire
+              </a>
+            </p>
+          </div>
+
+          <div class="resto__carte">
+            {
+              resto.id === 'paris-14' && (
+                <Image
+                  src={photoDevanture}
+                  alt="La devanture du restaurant Matisse, 60 avenue du Général Leclerc à Paris 14e"
+                  width={900}
+                  class="resto__photo"
+                />
+              )
+            }
+            <iframe
+              src={carteEmbed(resto)}
+              width="600"
+              height="420"
+              style="border:0"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title={`Plan d'accès — ${resto.nom}, ${resto.adresse.rue}, ${resto.adresse.codePostal} ${resto.adresse.ville}`}
+            />
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="section restos-suivre" aria-labelledby="titre-suivre">
+    <div class="contenu">
+      <h2 id="titre-suivre">Suivez-nous</h2>
+      <ul class="restos-reseaux" aria-label="Réseaux sociaux">
+        {
+          reseaux.map((r) => (
+            <li>
+              <a href={r.url} target="_blank" rel="noopener">
+                {r.nom}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .restos-entete {
+    background: var(--bg-2);
+    padding-block: var(--esp-l);
+    border-bottom: 1px solid var(--ligne);
+  }
+
+  .restos-chapo {
+    font-size: var(--fs-500);
+    color: var(--texte-2);
+    max-width: 42rem;
+  }
+
+  .resto + .resto {
+    border-top: 1px solid var(--ligne);
+  }
+
+  .resto__grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--esp-l);
+    align-items: start;
+  }
+
+  .resto__infos h2 {
+    color: var(--accent-contraste);
+  }
+
+  .resto__infos h3 {
+    font-size: var(--fs-500);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: var(--esp-m);
+  }
+
+  .resto__adresse {
+    font-style: normal;
+    font-size: var(--fs-600);
+    line-height: 1.7;
+    margin-bottom: var(--esp-xs);
+  }
+
+  .resto__acces {
+    color: var(--texte-2);
+  }
+
+  .resto__horaires {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 2;
+  }
+
+  .resto__itineraire {
+    margin-top: var(--esp-m);
+  }
+
+  .resto__carte :global(.resto__photo) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--rayon-l);
+    box-shadow: var(--ombre);
+    margin-bottom: var(--esp-s);
+  }
+
+  .resto__carte iframe {
+    width: 100%;
+    height: clamp(18rem, 40vw, 26rem);
+    border-radius: var(--rayon-l);
+    box-shadow: var(--ombre);
+  }
+
+  .restos-suivre {
+    background: var(--bg-2);
+    padding-block: var(--esp-l);
+  }
+
+  .restos-reseaux {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-m);
+    margin: 0;
+    padding: 0;
+    font-weight: 700;
+    font-size: var(--fs-500);
+  }
+</style>

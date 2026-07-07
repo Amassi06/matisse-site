@@ -1,0 +1,123 @@
+---
+// Mise en avant Instagram / Facebook / TikTok. Pas de flux « live » embarqué
+// à dessein : un vrai flux nécessite de charger un script tiers (Meta/TikTok
+// ou un service comme Elfsight/SnapWidget), ce qui va à l'encontre du choix
+// « zéro JS » fait sur tout le reste du site. Ces cartes sont statiques
+// et pointent directement vers les comptes.
+import infos from '../data/infos.json';
+import { estRempli, pseudoDepuisUrl } from '../lib/utils';
+
+const reseaux = [
+  { id: 'instagram', nom: 'Instagram', url: infos.reseaux.instagram },
+  { id: 'facebook', nom: 'Facebook', url: infos.reseaux.facebook },
+  { id: 'tiktok', nom: 'TikTok', url: infos.reseaux.tiktok },
+]
+  .filter((r) => estRempli(r.url))
+  .map((r) => ({ ...r, identifiant: pseudoDepuisUrl(r.url) }));
+
+const uid = crypto.randomUUID().slice(0, 6);
+---
+
+{
+  reseaux.length > 0 && (
+    <div class="reseaux-widget">
+      {reseaux.map((r) => (
+        <a
+          class="reseaux-carte"
+          href={r.url}
+          target="_blank"
+          rel="noopener"
+          aria-label={`${r.nom} — ${r.identifiant} (nouvel onglet)`}
+        >
+          {r.id === 'instagram' && (
+            <svg class="reseaux-icone" viewBox="0 0 48 48" role="img" aria-hidden="true">
+              <defs>
+                <linearGradient id={`ig-${uid}`} x1="0" y1="48" x2="48" y2="0">
+                  <stop offset="0%" stop-color="#f2b035" />
+                  <stop offset="45%" stop-color="#e8542f" />
+                  <stop offset="100%" stop-color="#8b3aa8" />
+                </linearGradient>
+              </defs>
+              <rect x="2" y="2" width="44" height="44" rx="13" fill={`url(#ig-${uid})`} />
+              <circle cx="24" cy="24" r="10.5" fill="none" stroke="#fff" stroke-width="3" />
+              <circle cx="35" cy="13" r="2.4" fill="#fff" />
+            </svg>
+          )}
+          {r.id === 'facebook' && (
+            <svg class="reseaux-icone" viewBox="0 0 48 48" role="img" aria-hidden="true">
+              <rect x="2" y="2" width="44" height="44" rx="13" fill="#1877f2" />
+              <path
+                d="M30.9 26.4l.8-5h-4.8v-3.2c0-1.4.7-2.7 2.8-2.7h2.2v-4.3s-2-.3-3.9-.3c-4 0-6.6 2.4-6.6 6.8v3.7H17v5h4.4V38h5.5V26.4h4z"
+                fill="#fff"
+              />
+            </svg>
+          )}
+          {r.id === 'tiktok' && (
+            <svg class="reseaux-icone" viewBox="0 0 48 48" role="img" aria-hidden="true">
+              <rect x="2" y="2" width="44" height="44" rx="13" fill="#0e0e0e" />
+              <path d="M27 10c1 3.4 3.4 5.6 7 5.9v4.3c-2.5.1-4.8-.6-7-2v10.4c0 5-3.9 8.9-8.8 8.9-4.9 0-8.8-4-8.8-8.9s3.9-8.9 8.8-8.9c.5 0 1 0 1.5.1v4.5a4.7 4.7 0 0 0-1.5-.2 4.5 4.5 0 1 0 4.4 4.5V10z" fill="#25F4EE" />
+              <path d="M25.4 10c1 3.4 3.4 5.6 7 5.9v4.3c-2.5.1-4.8-.6-7-2v10.4c0 5-3.9 8.9-8.8 8.9-4.9 0-8.8-4-8.8-8.9s3.9-8.9 8.8-8.9c.5 0 1 0 1.5.1v4.5a4.7 4.7 0 0 0-1.5-.2 4.5 4.5 0 1 0 4.4 4.5V10z" fill="#FE2C55" opacity="0.75" />
+              <path d="M26.2 10c1 3.4 3.4 5.6 7 5.9v4.3c-2.5.1-4.8-.6-7-2v10.4c0 5-3.9 8.9-8.8 8.9-4.9 0-8.8-4-8.8-8.9s3.9-8.9 8.8-8.9c.5 0 1 0 1.5.1v4.5a4.7 4.7 0 0 0-1.5-.2 4.5 4.5 0 1 0 4.4 4.5V10z" fill="#fff" />
+            </svg>
+          )}
+          <span class="reseaux-texte">
+            <strong>{r.nom}</strong>
+            <span>{r.identifiant}</span>
+          </span>
+          <span class="reseaux-suivre" aria-hidden="true">Suivre →</span>
+        </a>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .reseaux-widget {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--esp-m);
+  }
+
+  .reseaux-carte {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-s);
+    padding: var(--esp-m);
+    background: var(--surface);
+    border: 1px solid var(--ligne);
+    border-radius: var(--rayon-l);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+
+  .reseaux-carte:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--ombre);
+    color: inherit;
+  }
+
+  .reseaux-icone {
+    width: 3rem;
+    flex-shrink: 0;
+  }
+
+  .reseaux-texte {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+  }
+
+  .reseaux-texte span {
+    color: var(--texte-2);
+    font-size: var(--fs-300);
+  }
+
+  .reseaux-suivre {
+    margin-inline-start: auto;
+    font-weight: 700;
+    font-size: var(--fs-300);
+    color: var(--orange);
+    white-space: nowrap;
+  }
+</style>

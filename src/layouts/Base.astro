@@ -1,0 +1,148 @@
+---
+import '@fontsource/archivo-black';
+import '@fontsource-variable/archivo';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import infos from '../data/infos.json';
+import { estRempli } from '../lib/utils';
+
+interface Props {
+  titre: string;
+  description: string;
+  /** Schémas JSON-LD supplémentaires propres à la page (ex. Menu sur /carte) */
+  jsonLdExtra?: object[];
+  /** « article » pour les billets de blog (Open Graph) */
+  ogType?: 'website' | 'article';
+  /** Date de publication (utilisée quand ogType = article) */
+  datePublication?: Date;
+  /** Exclut la page des moteurs de recherche (ex. 404) */
+  noindex?: boolean;
+}
+
+const {
+  titre,
+  description,
+  jsonLdExtra = [],
+  ogType = 'website',
+  datePublication,
+  noindex = false,
+} = Astro.props;
+
+// Normalise le chemin construit en format « fichier » (/carte.html → /carte)
+const chemin =
+  Astro.url.pathname
+    .replace(/index\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/$/, '') || '/';
+const canonical = new URL(chemin, Astro.site);
+const ogImage = new URL('/images/og.png', Astro.site);
+
+const sameAs = Object.values(infos.reseaux).filter(estRempli);
+
+// Données structurées schema.org : une fiche Restaurant par établissement,
+// présente sur toutes les pages
+const restaurantsLd = infos.restaurants.map((resto) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': new URL(`/#restaurant-${resto.id}`, Astro.site).href,
+  name: resto.nom,
+  slogan: infos.slogan,
+  description: infos.description,
+  url: Astro.site?.href,
+  telephone: resto.telephoneIntl,
+  priceRange: infos.prixMoyen,
+  servesCuisine: infos.cuisines,
+  image: ogImage.href,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: resto.adresse.rue,
+    postalCode: resto.adresse.codePostal,
+    addressLocality: resto.adresse.ville,
+    addressCountry: resto.adresse.pays,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: resto.geo.latitude,
+    longitude: resto.geo.longitude,
+  },
+  hasMenu: new URL('/carte', Astro.site).href,
+  ...(sameAs.length > 0 && { sameAs }),
+  openingHoursSpecification: resto.horairesSchema.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.jours,
+    opens: h.ouverture,
+    closes: h.fermeture,
+  })),
+}));
+
+const jsonLd = [...restaurantsLd, ...jsonLdExtra];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titre}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#1e9e4f" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#131a16" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content={ogType} />
+    {
+      ogType === 'article' && datePublication && (
+        <meta property="article:published_time" content={datePublication.toISOString()} />
+      )
+    }
+    <meta property="og:site_name" content={infos.nom} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={titre} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Matisse — Hot & Fresh depuis 1998" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titre} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Matisse — Hot & Fresh depuis 1998" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="evitement" href="#contenu-principal">Aller au contenu principal</a>
+    <Header />
+    <main id="contenu-principal">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  .evitement {
+    position: absolute;
+    inset-inline-start: var(--esp-s);
+    top: -100%;
+    z-index: 20;
+    padding: 0.6em 1.2em;
+    background: var(--encre);
+    color: var(--creme);
+    border-radius: 0 0 var(--rayon) var(--rayon);
+    font-weight: 700;
+    text-decoration: none;
+    transition: top var(--transition);
+  }
+
+  .evitement:focus {
+    top: 0;
+  }
+</style>

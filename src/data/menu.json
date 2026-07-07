@@ -1,0 +1,176 @@
+{
+  "badges": {
+    "vege": { "emoji": "🌿", "label": "Végétarien" },
+    "coeur": { "emoji": "❤️", "label": "Coup de cœur" },
+    "bestseller": { "emoji": "⭐", "label": "Les plus vendus" },
+    "piment": { "emoji": "🌶️", "label": "Pimenté" }
+  },
+  "sections": [
+    {
+      "id": "sandwichs",
+      "titre": "Sandwichs",
+      "note": "Frites maison incluses",
+      "groupes": [
+        {
+          "titre": "Les Classiques",
+          "items": [
+            { "nom": "Kebab Classique", "prix": 8.9, "description": "Viande kebab grillée, crudités, sauce blanche maison", "badges": ["bestseller"] },
+            { "nom": "Poulet Curry-Zaatar", "prix": 9.9, "description": "Poulet curry-zaatar, crudités, cheddar, sauce ail", "badges": [] },
+            { "nom": "Triple Steak Américain", "prix": 11.0, "description": "3 steaks, cheddar, crudités, cornichons, sauce ketchup-mayo", "badges": [] }
+          ]
+        },
+        {
+          "titre": "Les Signatures",
+          "items": [
+            { "nom": "Kebab Berliner", "prix": 12.5, "description": "Pain Berliner, viande kebab grillée, crudités, légumes grillés, feta, sauce blanche", "badges": ["bestseller"] },
+            { "nom": "Halloumi Grill", "prix": 12.5, "description": "Pain Berliner, halloumi frit, crudités, légumes grillés, feta, sauce blanche", "badges": ["vege"] },
+            { "nom": "Américain Kebab", "prix": 13.0, "description": "Pain Berliner, viande kebab grillée, crudités, cheddar, coleslaw, cornichons, sauce blanche", "badges": ["coeur"] },
+            { "nom": "Kebab Fromage Chèvre Sumac", "prix": 13.5, "description": "Pain Berliner, viande kebab grillée, chèvre, crudités, chou rouge, maïs, sumac, sauce ail", "badges": [] }
+          ]
+        },
+        {
+          "titre": "Les Wraps",
+          "items": [
+            { "nom": "Wrap Kebab Feta", "prix": 9.9, "description": "Viande kebab grillée, feta, crudités, sauce blanche", "badges": ["bestseller"] },
+            { "nom": "Crispy Tenders Wrap", "prix": 9.9, "description": "Poulet crispy, cheddar, crudités, cornichons, oignons crispy, sauce BBQ", "badges": [] },
+            { "nom": "Chicken BBQ Wrap", "prix": 10.5, "description": "Poulet curry-zaatar, cheddar, crudités, maïs, sauce BBQ épicée", "badges": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowls",
+      "titre": "Bowls",
+      "note": null,
+      "groupes": [
+        {
+          "titre": "Avec frites",
+          "items": [
+            { "nom": "Berliner Bowl", "prix": 13.5, "description": "Viande kebab grillée, crudités, chou rouge, légumes grillés, grenade, feta, carottes, sauce blanche", "badges": [] },
+            { "nom": "Halloumi Bowl", "prix": 13.5, "description": "Halloumi frit, crudités, carottes, chou rouge, légumes grillés, oignons crispy, sauce blanche", "badges": ["vege"] },
+            { "nom": "Crispy Chicken Bowl", "prix": 13.5, "description": "Poulet frit mariné, crudités, chou rouge, cornichons, oignons crispy, sauce ail", "badges": ["bestseller"] },
+            { "nom": "Fusion Curry Kebab Bowl", "prix": 13.9, "description": "Viande kebab grillée, poulet curry zaatar, crudités, concombre, oignons rouges, olives, chou rouge, harissa huile d'olive", "badges": ["coeur"] }
+          ]
+        },
+        {
+          "titre": "Avec riz",
+          "items": [
+            { "nom": "Thon Tunis Bowl", "prix": 12.5, "description": "Thon, riz, crudités, olives, œuf dur, oignons rouges, jalapeños, maïs, harissa huile d'olive", "badges": [] },
+            { "nom": "Grèce Kebab Bowl", "prix": 13.0, "description": "Viande kebab grillée, riz, crudités, feta, olives, concombre, oignons rouges, sauce blanche", "badges": [] },
+            { "nom": "Poulet Curry & Zaatar Bowl", "prix": 12.5, "description": "Poulet curry-zaatar, riz, crudités, carottes, chou rouge, concombre, maïs, olives, sauce blanche, sriracha", "badges": [] },
+            { "nom": "Protéine Veggie Bowl", "prix": 13.0, "description": "Œufs durs, riz, légumes grillés, crudités, chou rouge, carottes, concombre, maïs, chèvre, sauce yaourt citron", "badges": ["vege"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smash-burgers",
+      "titre": "Smash Burgers",
+      "note": "Frites maison incluses",
+      "groupes": [
+        {
+          "titre": "Bœuf",
+          "items": [
+            { "nom": "Iron Smash Burger", "prix": 9.9, "description": "Steak smashé, cheddar, oignons, cornichons, salade, sauce Iron", "badges": [] },
+            { "nom": "Double Smash Burger", "prix": 12.9, "description": "Double steak smashé, double cheddar, oignons, cornichons, sauce Iron", "badges": ["coeur"] },
+            { "nom": "Jalapeños Smash Burger", "prix": 13.0, "description": "Double steak smashé, jalapeños, cornichons, cheddar, oignons, sauce sriracha", "badges": [] },
+            { "nom": "Bacon Smash Burger", "prix": 13.5, "description": "Double steak smashé, salade, cheddar, bacon, cornichons, oignons, sauce BBQ", "badges": ["bestseller"] }
+          ]
+        },
+        {
+          "titre": "Poulet",
+          "items": [
+            { "nom": "Crispy Coleslaw Burger", "prix": 11.5, "description": "Poulet frit, coleslaw, cheddar, oignons, salade, cornichons, sauce mayonnaise", "badges": [] },
+            { "nom": "Jalapeños Chicken Burger", "prix": 11.9, "description": "Poulet frit, jalapeños, cornichons, cheddar, salade, oignons, sauce mayonnaise sriracha", "badges": ["piment"] },
+            { "nom": "Crispy BBQ Burger", "prix": 10.0, "description": "Poulet frit, cheddar, oignons, salade, cornichons, sauce BBQ", "badges": [] }
+          ]
+        },
+        {
+          "titre": "Vege",
+          "items": [
+            { "nom": "Napa Grill Cheese Burger", "prix": 12.9, "description": "Halloumi frit, chou rouge, carotte, salade, cornichons, tomates, oignons, sauce ail", "badges": ["vege"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frites-maison",
+      "titre": "Frites maison",
+      "note": "Pommes de terre Agria, 2 bains de cuisson",
+      "groupes": [
+        {
+          "titre": null,
+          "items": [
+            { "nom": "Frites nature", "prix": 4.0, "description": null, "badges": [] },
+            { "nom": "Spicy Sriracha Fries", "prix": 6.5, "description": "Oignons rouges, oignons crispy, jalapeños et sauce sriracha", "badges": [] },
+            { "nom": "Frites & kebab", "prix": 6.9, "description": "Sauce blanche", "badges": [] },
+            { "nom": "Frites & légumes", "prix": 6.5, "description": "Sauce blanche", "badges": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snacks-chauds",
+      "titre": "Snacks chauds",
+      "note": "Tenders maison servis avec sauce barbecue",
+      "groupes": [
+        {
+          "titre": null,
+          "items": [
+            { "nom": "Tenders — 3 pièces", "prix": 5.5, "description": null, "badges": [] },
+            { "nom": "Tenders — 5 pièces", "prix": 8.5, "description": null, "badges": [] },
+            { "nom": "Tenders — 8 pièces", "prix": 10.9, "description": null, "badges": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "barquettes-riz",
+      "titre": "Barquettes riz",
+      "note": null,
+      "groupes": [
+        {
+          "titre": null,
+          "items": [
+            { "nom": "Riz & kebab", "prix": 5.9, "description": "Avec sa sauce blanche", "badges": [] },
+            { "nom": "Riz nature", "prix": 3.5, "description": null, "badges": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "desserts",
+      "titre": "Desserts",
+      "note": null,
+      "groupes": [
+        {
+          "titre": null,
+          "items": [
+            { "nom": "Maxi Cookie", "prix": 3.0, "description": null, "badges": [] },
+            { "nom": "Tiramisu", "prix": 4.5, "description": null, "badges": [] },
+            { "nom": "Donuts", "prix": 3.0, "description": null, "badges": [] },
+            { "nom": "Baklava", "prix": 1.2, "description": null, "badges": [] },
+            { "nom": "Bourma (cheveux d'ange)", "prix": 2.0, "description": null, "badges": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boissons",
+      "titre": "Boissons",
+      "note": null,
+      "groupes": [
+        {
+          "titre": null,
+          "items": [
+            { "nom": "Citronnade maison 33 cl", "prix": 3.0, "description": null, "badges": [] },
+            { "nom": "Bissap maison 33 cl", "prix": 3.0, "description": null, "badges": [] },
+            { "nom": "Boisson 33 cl", "prix": 2.0, "description": null, "badges": [] },
+            { "nom": "Café", "prix": 2.0, "description": null, "badges": [] },
+            { "nom": "Thé", "prix": 2.0, "description": null, "badges": [] }
+          ]
+        }
+      ]
+    }
+  ]
+}

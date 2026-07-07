@@ -1,0 +1,155 @@
+---
+import Logo from './Logo.astro';
+
+const chemin =
+  Astro.url.pathname
+    .replace(/index\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/$/, '') || '/';
+const liens = [
+  { href: '/', label: 'Accueil' },
+  { href: '/carte', label: 'La carte' },
+  { href: '/a-propos', label: 'Notre histoire' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/nos-restaurants', label: 'Nos restaurants' },
+];
+---
+
+<header class="entete">
+  <div class="contenu entete__barre">
+    <a href="/" class="entete__logo" aria-label="Matisse — retour à l'accueil">
+      <Logo class="entete__badge" />
+      <span class="entete__marque">Matisse</span>
+    </a>
+
+    <nav class="entete__nav" aria-label="Navigation principale">
+      <ul>
+        {
+          liens.map((lien) => (
+            <li>
+              <a href={lien.href} aria-current={chemin === lien.href ? 'page' : undefined}>
+                {lien.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="btn btn--plein entete__cta" href="/nos-restaurants">
+      <span aria-hidden="true">📞</span> Commander
+    </a>
+  </div>
+</header>
+
+<style>
+  .entete {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ligne);
+  }
+
+  .entete__barre {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-m);
+    padding-block: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .entete__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--texte);
+    --logo-contraste: var(--bg);
+  }
+
+  /* :global — la classe est portée par le <svg> rendu dans Logo.astro */
+  .entete__logo :global(.entete__badge) {
+    width: 3.6rem;
+    flex-shrink: 0;
+  }
+
+  .entete__marque {
+    font-family: var(--font-display);
+    font-size: var(--fs-600);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .entete__nav {
+    margin-inline-start: auto;
+  }
+
+  .entete__nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 2.5vw, 2rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .entete__nav a {
+    display: inline-block;
+    padding-block: 0.4rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--texte);
+    border-bottom: 3px solid transparent;
+    transition: border-color var(--transition), color var(--transition);
+  }
+
+  .entete__nav a:hover {
+    color: var(--accent-contraste);
+  }
+
+  .entete__nav a[aria-current='page'] {
+    color: var(--accent-contraste);
+    border-bottom-color: var(--orange);
+  }
+
+  .entete__cta {
+    font-size: var(--fs-300);
+    padding: 0.65em 1.3em;
+  }
+
+  @media (max-width: 44rem) {
+    .entete__barre {
+      row-gap: 0.25rem;
+    }
+
+    .entete__nav {
+      order: 3;
+      flex-basis: 100%;
+      min-width: 0;
+    }
+
+    /* Une seule ligne défilante : garde le header compact malgré les 5 liens */
+    .entete__nav ul {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: safe center;
+      padding-bottom: 0.4rem;
+      scrollbar-width: none;
+    }
+
+    .entete__nav a {
+      white-space: nowrap;
+    }
+
+    .entete__cta {
+      margin-inline-start: auto;
+    }
+
+    .entete__marque {
+      display: none;
+    }
+  }
+</style>

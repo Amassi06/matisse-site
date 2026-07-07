@@ -1,0 +1,75 @@
+---
+import menu from '../data/menu.json';
+
+interface Props {
+  nom: string;
+  prix: number;
+  description?: string | null;
+  badges?: string[];
+}
+
+const { nom, prix, description = null, badges = [] } = Astro.props;
+const badgesMeta = menu.badges as Record<string, { emoji: string; label: string }>;
+const prixAffiche = `${prix.toFixed(2).replace('.', ',')} €`;
+---
+
+<article class="plat">
+  <div class="plat__ligne">
+    <span class="plat__nom">
+      {nom}
+      {
+        badges.map((b) => (
+          <span class="plat__badge" title={badgesMeta[b].label}>
+            <span aria-hidden="true">{badgesMeta[b].emoji}</span>
+            <span class="visually-hidden">{badgesMeta[b].label}</span>
+          </span>
+        ))
+      }
+    </span>
+    <span class="plat__points" aria-hidden="true"></span>
+    <span class="plat__prix">{prixAffiche}</span>
+  </div>
+  {description && <p class="plat__desc">{description}</p>}
+</article>
+
+<style>
+  .plat {
+    padding-block: var(--esp-xs);
+  }
+
+  .plat__ligne {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  .plat__nom {
+    font-weight: 700;
+    font-size: var(--fs-500);
+  }
+
+  .plat__badge {
+    font-size: 0.85em;
+    margin-inline-start: 0.15em;
+  }
+
+  .plat__points {
+    flex: 1;
+    min-width: 1.5rem;
+    border-bottom: 2px dotted var(--ligne);
+    transform: translateY(-0.3em);
+  }
+
+  .plat__prix {
+    font-family: var(--font-display);
+    font-size: var(--fs-500);
+    color: var(--accent-contraste);
+    white-space: nowrap;
+  }
+
+  .plat__desc {
+    margin: 0.15rem 0 0;
+    font-size: var(--fs-300);
+    color: var(--texte-2);
+  }
+</style>

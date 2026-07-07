@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+
+const titre = 'Page introuvable — Matisse';
+const description = 'Cette page n’existe pas ou plus. Retrouvez la carte et les infos du restaurant Matisse, Paris 14e.';
+---
+
+<Base titre={titre} description={description} noindex>
+  <section class="section erreur">
+    <div class="contenu">
+      <p class="surtitre">Erreur 404</p>
+      <h1>Cette page a été dévorée</h1>
+      <p>Pas de panique : la carte, elle, est toujours là.</p>
+      <div class="erreur__actions">
+        <a class="btn btn--plein" href="/">Retour à l'accueil</a>
+        <a class="btn btn--vert" href="/carte">Voir la carte</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .erreur {
+    text-align: center;
+  }
+
+  .erreur p {
+    margin-inline: auto;
+  }
+
+  .erreur__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--esp-s);
+    margin-top: var(--esp-m);
+  }
+</style>

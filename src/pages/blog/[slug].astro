@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('blog');
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const titre = `${article.data.titre} — Blog Matisse`;
+const description = article.data.description;
+
+const formateurDate = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const canonical = new URL(`/blog/${article.id}`, Astro.site).href;
+
+const jsonLdExtra = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.data.titre,
+    description: article.data.description,
+    image: new URL('/images/og.png', Astro.site).href,
+    datePublished: article.data.date.toISOString(),
+    mainEntityOfPage: canonical,
+    author: { '@type': 'Organization', name: 'Matisse' },
+    publisher: { '@type': 'Organization', name: 'Matisse' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: new URL('/blog', Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: article.data.titre, item: canonical },
+    ],
+  },
+];
+---
+
+<Base
+  titre={titre}
+  description={description}
+  jsonLdExtra={jsonLdExtra}
+  ogType="article"
+  datePublication={article.data.date}
+>
+  <article class="section article">
+    <div class="contenu article__contenu">
+      <p class="surtitre"><a href="/blog">← Le blog</a></p>
+      <p class="article__date">
+        <time datetime={article.data.date.toISOString().slice(0, 10)}>
+          {formateurDate.format(article.data.date)}
+        </time>
+      </p>
+      <h1>{article.data.titre}</h1>
+      <div class="article__corps">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .article__contenu {
+    max-width: 48rem;
+  }
+
+  .article__date {
+    color: var(--texte-2);
+    font-size: var(--fs-300);
+    margin-bottom: var(--esp-s);
+  }
+
+  .article__corps :global(h2) {
+    color: var(--accent-contraste);
+    margin-top: var(--esp-l);
+  }
+
+  .article__corps :global(p) {
+    max-width: none;
+  }
+
+  .article__corps :global(ul) {
+    padding-inline-start: 1.2em;
+  }
+
+  .article__corps :global(a) {
+    font-weight: 700;
+  }
+</style>

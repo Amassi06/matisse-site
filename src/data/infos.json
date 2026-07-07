@@ -1,0 +1,76 @@
+{
+  "nom": "Matisse",
+  "slogan": "Hot & Fresh depuis 1998",
+  "description": "Matisse, restaurants street food à Paris 14e (Alésia) et Ivry-sur-Seine : kebabs maison, bowls frais, smash burgers et frites maison. Sur place, à emporter ou en livraison.",
+  "prixMoyen": "€€",
+  "cuisines": ["Kebab", "Smash burger", "Bowls", "Street food"],
+  "restaurants": [
+    {
+      "id": "paris-14",
+      "nom": "Matisse Paris 14e",
+      "ville": "Paris 14e — Alésia",
+      "adresse": {
+        "rue": "60 avenue du Général Leclerc",
+        "codePostal": "75014",
+        "ville": "Paris",
+        "pays": "FR"
+      },
+      "geo": { "latitude": 48.8285, "longitude": 2.3272 },
+      "acces": "Métro Alésia (ligne 4) — bus 38, 62, 68",
+      "telephone": "01 45 42 54 99",
+      "telephoneIntl": "+33145425499",
+      "horaires": [{ "jours": "Lundi – Dimanche", "heures": "11h00 – 01h00" }],
+      "horairesSchema": [
+        {
+          "jours": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "ouverture": "11:00",
+          "fermeture": "01:00"
+        }
+      ],
+      "commande": {
+        "uberEats": "https://www.ubereats.com/fr/store/matisse-food-paris/8UU3ujYnTRiM5mj_RpR4EQ",
+        "deliveroo": "https://deliveroo.fr/menu/Paris/14eme-mouton-duvernet/restaurant-matisse?"
+      }
+    },
+    {
+      "id": "ivry",
+      "nom": "Matisse Ivry-sur-Seine",
+      "ville": "Ivry-sur-Seine",
+      "adresse": {
+        "rue": "10 bis rue Barbès",
+        "codePostal": "94200",
+        "ville": "Ivry-sur-Seine",
+        "pays": "FR"
+      },
+      "geo": { "latitude": 48.8169, "longitude": 2.3711 },
+      "acces": "Métro Pierre et Marie Curie (ligne 7)",
+      "telephone": "01 45 21 01 37",
+      "telephoneIntl": "+33145210137",
+      "horaires": [
+        { "jours": "Lundi – Mercredi & Dimanche", "heures": "11h00 – 01h00" },
+        { "jours": "Jeudi – Samedi", "heures": "11h00 – 02h00" }
+      ],
+      "horairesSchema": [
+        {
+          "jours": ["Monday", "Tuesday", "Wednesday", "Sunday"],
+          "ouverture": "11:00",
+          "fermeture": "01:00"
+        },
+        {
+          "jours": ["Thursday", "Friday", "Saturday"],
+          "ouverture": "11:00",
+          "fermeture": "02:00"
+        }
+      ],
+      "commande": {
+        "uberEats": "https://www.ubereats.com/fr/store/matisse-food-ivry/_y281MLXUIaFXe_yb4-o9w",
+        "deliveroo": "https://deliveroo.fr/fr/menu/paris/18eme-goutte-dor/matisse-food-ivry"
+      }
+    }
+  ],
+  "reseaux": {
+    "instagram": "https://www.instagram.com/matissefood/",
+    "facebook": "https://www.facebook.com/chez.matisse/",
+    "tiktok": "https://www.tiktok.com/@matissefood"
+  }
+}

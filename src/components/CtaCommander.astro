@@ -1,0 +1,65 @@
+---
+import infos from '../data/infos.json';
+// Les liens Uber Eats / Deliveroo n'apparaissent que lorsqu'ils sont
+// renseignés dans src/data/infos.json (valeur différente de « A_COMPLETER »).
+import { estRempli } from '../lib/utils';
+
+type Restaurant = (typeof infos.restaurants)[number];
+
+interface Props {
+  class?: string;
+  /** Limite l'affichage à un seul restaurant (ex. fiches de /nos-restaurants) */
+  restaurant?: Restaurant;
+}
+const { class: className, restaurant } = Astro.props;
+const restaurants = restaurant ? [restaurant] : infos.restaurants;
+---
+
+<div class:list={['cta-commander', className]}>
+  {
+    restaurants.map((resto) => (
+      <div class="cta-commander__resto">
+        {!restaurant && <p class="cta-commander__ville">{resto.ville}</p>}
+        <div class="cta-commander__boutons">
+          <a class="btn btn--plein" href={`tel:${resto.telephoneIntl}`}>
+            <span aria-hidden="true">📞</span>
+            {resto.telephone}
+          </a>
+          {estRempli(resto.commande.uberEats) && (
+            <a class="btn btn--contour" href={resto.commande.uberEats} target="_blank" rel="noopener">
+              Uber Eats
+            </a>
+          )}
+          {estRempli(resto.commande.deliveroo) && (
+            <a class="btn btn--contour" href={resto.commande.deliveroo} target="_blank" rel="noopener">
+              Deliveroo
+            </a>
+          )}
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .cta-commander {
+    display: flex;
+    flex-direction: column;
+    gap: var(--esp-m);
+  }
+
+  .cta-commander__ville {
+    font-weight: 700;
+    font-size: var(--fs-300);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    margin-bottom: var(--esp-xs);
+  }
+
+  .cta-commander__boutons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-s);
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+// Badge « MATISSE — Hot & Fresh depuis 1998 » recréé en SVG.
+// Le badge prend la couleur du texte courant (currentColor) ;
+// la couleur de contraste se règle via --logo-contraste.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+// Identifiants uniques par instance (le logo peut apparaître plusieurs fois par page)
+const uid = crypto.randomUUID().slice(0, 6);
+---
+
+<svg
+  class:list={['logo-matisse', className]}
+  viewBox="0 0 220 170"
+  role="img"
+  aria-label="Matisse — Hot & Fresh depuis 1998"
+>
+  <circle cx="110" cy="85" r="78" fill="currentColor"></circle>
+  <circle
+    cx="110"
+    cy="85"
+    r="66"
+    fill="none"
+    stroke="var(--logo-contraste, #faf6ec)"
+    stroke-width="1.6"
+    stroke-dasharray="8 6"></circle>
+
+  <!-- Rubans latéraux à queue d'aronde -->
+  <polygon
+    points="18,62 2,52 10,85 2,118 18,108"
+    fill="currentColor"
+    stroke="var(--logo-contraste, #faf6ec)"
+    stroke-width="2"
+    stroke-linejoin="round"></polygon>
+  <polygon
+    points="202,62 218,52 210,85 218,118 202,108"
+    fill="currentColor"
+    stroke="var(--logo-contraste, #faf6ec)"
+    stroke-width="2"
+    stroke-linejoin="round"></polygon>
+
+  <!-- Bandeau central -->
+  <rect x="12" y="58" width="196" height="54" fill="currentColor"></rect>
+  <rect
+    x="16"
+    y="62"
+    width="188"
+    height="46"
+    fill="none"
+    stroke="var(--logo-contraste, #faf6ec)"
+    stroke-width="2"></rect>
+
+  <path id={`arc-haut-${uid}`} d="M 65,59 A 52,52 0 0 1 155,59" fill="none"></path>
+  <path id={`arc-bas-${uid}`} d="M 61.5,113 A 56,56 0 0 0 158.5,113" fill="none"></path>
+
+  <text
+    font-family="'Archivo Black', 'Arial Black', sans-serif"
+    font-size="13"
+    letter-spacing="1.5"
+    fill="var(--logo-contraste, #faf6ec)"
+  >
+    <textPath href={`#arc-haut-${uid}`} startOffset="50%" text-anchor="middle">HOT &amp; FRESH</textPath>
+  </text>
+  <text
+    font-family="'Archivo Black', 'Arial Black', sans-serif"
+    font-size="13"
+    letter-spacing="1.5"
+    fill="var(--logo-contraste, #faf6ec)"
+  >
+    <textPath href={`#arc-bas-${uid}`} startOffset="50%" text-anchor="middle">DEPUIS 1998</textPath>
+  </text>
+
+  <text
+    x="110"
+    y="86"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-family="'Archivo Black', 'Arial Black', sans-serif"
+    font-size="29"
+    letter-spacing="1"
+    fill="var(--logo-contraste, #faf6ec)"
+  >MATISSE</text>
+
+  <text x="30" y="90" text-anchor="middle" font-size="14" fill="var(--logo-contraste, #faf6ec)">★</text>
+  <text x="190" y="90" text-anchor="middle" font-size="14" fill="var(--logo-contraste, #faf6ec)">★</text>
+</svg>
+
+<style>
+  .logo-matisse {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

@@ -1,0 +1,167 @@
+---
+import Logo from './Logo.astro';
+import infos from '../data/infos.json';
+import { estRempli } from '../lib/utils';
+
+const annee = new Date().getFullYear();
+const reseaux = [
+  { nom: 'Instagram', url: infos.reseaux.instagram },
+  { nom: 'Facebook', url: infos.reseaux.facebook },
+  { nom: 'TikTok', url: infos.reseaux.tiktok },
+].filter((r) => estRempli(r.url));
+---
+
+<footer class="pied">
+  <div class="contenu pied__grille">
+    <div class="pied__marque">
+      <Logo class="pied__badge" />
+      <p class="pied__slogan">{infos.slogan}</p>
+      <p>
+        Kebabs, bowls et smash burgers préparés maison, à Paris 14<sup>e</sup> (Alésia) et
+        Ivry-sur-Seine.
+      </p>
+      {
+        reseaux.length > 0 && (
+          <ul class="pied__reseaux" aria-label="Réseaux sociaux">
+            {reseaux.map((r) => (
+              <li>
+                <a href={r.url} target="_blank" rel="noopener">
+                  {r.nom}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+
+    {
+      infos.restaurants.map((resto) => (
+        <div>
+          <h2 class="pied__titre">{resto.nom}</h2>
+          <address class="pied__adresse">
+            {resto.adresse.rue}
+            <br />
+            {resto.adresse.codePostal} {resto.adresse.ville}
+            <br />
+            <a href={`tel:${resto.telephoneIntl}`}>{resto.telephone}</a>
+          </address>
+          <ul class="pied__liste">
+            {resto.horaires.map((h) => (
+              <li>
+                {h.jours} : {estRempli(h.heures) ? h.heures : 'nous appeler'}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="pied__bas">
+    <div class="contenu pied__bas-contenu">
+      <p>© {annee} Matisse — Paris 14<sup>e</sup> &amp; Ivry-sur-Seine</p>
+      <nav aria-label="Plan du site">
+        <a href="/">Accueil</a>
+        <a href="/carte">La carte</a>
+        <a href="/a-propos">Notre histoire</a>
+        <a href="/blog">Blog</a>
+        <a href="/nos-restaurants">Nos restaurants</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .pied {
+    margin-top: var(--esp-xl);
+    background: var(--encre);
+    color: var(--creme);
+    --logo-contraste: var(--encre);
+  }
+
+  .pied a {
+    color: inherit;
+  }
+
+  .pied a:hover {
+    color: var(--jaune);
+  }
+
+  .pied__grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--esp-l);
+    padding-block: var(--esp-l);
+  }
+
+  /* :global — la classe est portée par le <svg> rendu dans Logo.astro */
+  .pied__marque :global(.pied__badge) {
+    width: 7rem;
+    color: var(--creme);
+    margin-bottom: var(--esp-s);
+  }
+
+  .pied__slogan {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--jaune);
+    margin-bottom: var(--esp-xs);
+  }
+
+  .pied__titre {
+    font-size: var(--fs-300);
+    font-family: var(--font-corps);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--jaune);
+    margin-bottom: var(--esp-s);
+  }
+
+  .pied__adresse {
+    font-style: normal;
+    line-height: 1.9;
+  }
+
+  .pied__liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1.9;
+  }
+
+  .pied__reseaux {
+    list-style: none;
+    display: flex;
+    gap: var(--esp-m);
+    margin: var(--esp-s) 0 0;
+    padding: 0;
+    font-weight: 700;
+  }
+
+  .pied__bas {
+    border-top: 1px solid rgb(250 246 236 / 0.15);
+    font-size: var(--fs-300);
+  }
+
+  .pied__bas-contenu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-s) var(--esp-l);
+    justify-content: space-between;
+    padding-block: var(--esp-s);
+  }
+
+  .pied__bas-contenu p {
+    margin: 0;
+    color: rgb(250 246 236 / 0.7);
+  }
+
+  .pied__bas-contenu nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-s) var(--esp-m);
+  }
+</style>
