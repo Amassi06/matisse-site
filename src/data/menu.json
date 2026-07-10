@@ -39,31 +39,6 @@
       ]
     },
     {
-      "id": "bowls",
-      "titre": "Bowls",
-      "note": null,
-      "groupes": [
-        {
-          "titre": "Avec frites",
-          "items": [
-            { "nom": "Berliner Bowl", "prix": 13.5, "description": "Viande kebab grillée, crudités, chou rouge, légumes grillés, grenade, feta, carottes, sauce blanche", "badges": [] },
-            { "nom": "Halloumi Bowl", "prix": 13.5, "description": "Halloumi frit, crudités, carottes, chou rouge, légumes grillés, oignons crispy, sauce blanche", "badges": ["vege"] },
-            { "nom": "Crispy Chicken Bowl", "prix": 13.5, "description": "Poulet frit mariné, crudités, chou rouge, cornichons, oignons crispy, sauce ail", "badges": ["bestseller"] },
-            { "nom": "Fusion Curry Kebab Bowl", "prix": 13.9, "description": "Viande kebab grillée, poulet curry zaatar, crudités, concombre, oignons rouges, olives, chou rouge, harissa huile d'olive", "badges": ["coeur"] }
-          ]
-        },
-        {
-          "titre": "Avec riz",
-          "items": [
-            { "nom": "Thon Tunis Bowl", "prix": 12.5, "description": "Thon, riz, crudités, olives, œuf dur, oignons rouges, jalapeños, maïs, harissa huile d'olive", "badges": [] },
-            { "nom": "Grèce Kebab Bowl", "prix": 13.0, "description": "Viande kebab grillée, riz, crudités, feta, olives, concombre, oignons rouges, sauce blanche", "badges": [] },
-            { "nom": "Poulet Curry & Zaatar Bowl", "prix": 12.5, "description": "Poulet curry-zaatar, riz, crudités, carottes, chou rouge, concombre, maïs, olives, sauce blanche, sriracha", "badges": [] },
-            { "nom": "Protéine Veggie Bowl", "prix": 13.0, "description": "Œufs durs, riz, légumes grillés, crudités, chou rouge, carottes, concombre, maïs, chèvre, sauce yaourt citron", "badges": ["vege"] }
-          ]
-        }
-      ]
-    },
-    {
       "id": "smash-burgers",
       "titre": "Smash Burgers",
       "note": "Frites maison incluses",
@@ -105,6 +80,30 @@
             { "nom": "Spicy Sriracha Fries", "prix": 6.5, "description": "Oignons rouges, oignons crispy, jalapeños et sauce sriracha", "badges": [] },
             { "nom": "Frites & kebab", "prix": 6.9, "description": "Sauce blanche", "badges": [] },
             { "nom": "Frites & légumes", "prix": 6.5, "description": "Sauce blanche", "badges": [] }
+          ]
+        }
+      ]
+    },
+        {
+      "id": "bowls",
+      "titre": "Bowls",
+      "note": null,
+      "groupes": [
+        {
+          "titre": "Avec frites",
+          "items": [
+            { "nom": "Berliner Bowl", "prix": 13.5, "description": "Viande kebab grillée, crudités, chou rouge, légumes grillés, grenade, feta, carottes, sauce blanche", "badges": [] },
+            { "nom": "Halloumi Bowl", "prix": 13.5, "description": "Halloumi frit, crudités, carottes, chou rouge, légumes grillés, oignons crispy, sauce blanche", "badges": ["vege"] },
+            { "nom": "Crispy Chicken Bowl", "prix": 13.5, "description": "Poulet frit mariné, crudités, chou rouge, cornichons, oignons crispy, sauce ail", "badges": ["bestseller"] },
+            { "nom": "Fusion Curry Kebab Bowl", "prix": 13.9, "description": "Viande kebab grillée, poulet curry zaatar, crudités, concombre, oignons rouges, olives, chou rouge, harissa huile d'olive", "badges": ["coeur"] }
+          ]
+        },
+        {
+          "titre": "Avec riz",
+          "items": [
+            { "nom": "Grèce Kebab Bowl", "prix": 13.0, "description": "Viande kebab grillée, riz, crudités, feta, olives, concombre, oignons rouges, sauce blanche", "badges": [] },
+            { "nom": "Poulet Curry & Zaatar Bowl", "prix": 12.5, "description": "Poulet curry-zaatar, riz, crudités, carottes, chou rouge, concombre, maïs, olives, sauce blanche, sriracha", "badges": [] },
+            { "nom": "Protéine Veggie Bowl", "prix": 13.0, "description": "Œufs durs, riz, légumes grillés, crudités, chou rouge, carottes, concombre, maïs, chèvre, sauce yaourt citron", "badges": ["vege"] }
           ]
         }
       ]
