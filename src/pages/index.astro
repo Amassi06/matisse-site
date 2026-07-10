@@ -1,18 +1,16 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import Logo from '../components/Logo.astro';
 import CtaCommander from '../components/CtaCommander.astro';
 import ReseauxWidget from '../components/ReseauxWidget.astro';
 import infos from '../data/infos.json';
 import { menu } from '../lib/menu';
-import photoBerliner from '../assets/photos/berliner.webp';
-import photoBowl from '../assets/photos/bowl-berliner.webp';
-import photoBurger from '../assets/photos/burger.jpg';
+import photoBerliner from '../assets/photos/Matisse P10.png';
+import photoBurger from '../assets/photos/Matisse P5.jpeg';
 import photoBroche from '../assets/photos/broche-kebab.webp';
-import photoViandes from '../assets/photos/viandes-maison.webp';
+import photoViandes from '../assets/photos/Matisse P13.png';
 
-const titre = 'Matisse — Kebab, bowls & smash burgers à Paris 14e & Ivry-sur-Seine';
+const titre = 'Matisse — Berliner Kebab, bowls & smash burgers à Paris 14e & Ivry-sur-Seine';
 const description =
   'Matisse, street food maison depuis 1998 : kebabs berliner, bowls frais, smash burgers et frites maison. Deux restaurants — Paris 14e (Alésia) et Ivry-sur-Seine. Sur place, à emporter ou en livraison.';
 
@@ -37,14 +35,6 @@ const univers = [
     texte: 'Kebab classique, pain Berliner signature ou wrap : viande grillée à la broche et frites maison incluses.',
   },
   {
-    id: 'bowls',
-    titre: 'Bowls',
-    photo: photoBowl,
-    alt: 'Bowl Berliner : viande kebab, frites maison, salade, feta et grenade',
-    position: '50% 50%',
-    texte: 'Frites ou riz, légumes frais, feta, grenade, harissa à l’huile d’olive : des bols complets et colorés.',
-  },
-  {
     id: 'smash-burgers',
     titre: 'Smash burgers',
     photo: photoBurger,
@@ -55,6 +45,34 @@ const univers = [
 ] as const;
 
 const badgesMeta = menu.badges as Record<string, { emoji: string; label: string }>;
+
+// Vidéos maison (converties en MP4 H.264 dans public/videos/)
+const videos = [
+  {
+    src: '/videos/matisse-1.mp4',
+    poster: '/videos/matisse-1.webp',
+    titre: 'De la broche au Berliner',
+    label: 'La préparation du kebab Berliner en cuisine, de la broche au sandwich',
+  },
+  {
+    src: '/videos/matisse-3.mp4',
+    poster: '/videos/matisse-3.webp',
+    titre: 'Smash burger, sauce maison',
+    label: 'Smash burger et frites maison nappés de sauce',
+  },
+  {
+    src: '/videos/matisse-4.mp4',
+    poster: '/videos/matisse-4.webp',
+    titre: 'Kebab & frites maison',
+    label: 'Sandwich kebab servi avec frites maison',
+  },
+  {
+    src: '/videos/matisse-2.mp4',
+    poster: '/videos/matisse-2.webp',
+    titre: 'La maison, le soir',
+    label: 'La devanture du restaurant Matisse à la tombée de la nuit',
+  },
+] as const;
 ---
 
 <Base titre={titre} description={description}>
@@ -63,7 +81,7 @@ const badgesMeta = menu.badges as Record<string, { emoji: string; label: string 
     <div class="contenu hero__grille">
       <div class="hero__texte">
         <p class="hero__slogan">{infos.slogan}</p>
-        <h1>Kebabs, bowls &amp; smash burgers maison — Paris 14<sup>e</sup> &amp; Ivry</h1>
+        <h1>Berliner kebabs &amp; smash burgers maison — Paris 14<sup>e</sup> &amp; Ivry</h1>
         <p class="hero__accroche">
           Viande grillée à la broche, produits frais et frites maison en deux bains de cuisson.
           Deux adresses : Alésia (Paris 14<sup>e</sup>) et Ivry-sur-Seine — sur place, à emporter
@@ -77,8 +95,36 @@ const badgesMeta = menu.badges as Record<string, { emoji: string; label: string 
           </a>
         </div>
       </div>
-      <div class="hero__logo">
-        <Logo />
+      <div class="hero__video">
+        {
+          videos.map((v, i) => (
+            <video
+              class:list={['hero__clip', { 'est-actif': i === 0 }]}
+              src={v.src}
+              poster={v.poster}
+              muted
+              loop
+              playsinline
+              preload={i === 0 ? 'auto' : 'none'}
+              aria-label={v.label}
+            />
+          ))
+        }
+        <button class="hero__son" type="button" aria-pressed="false" aria-label="Activer le son">
+          <span aria-hidden="true">🔇</span>
+        </button>
+        <div class="hero__points">
+          {
+            videos.map((v, i) => (
+              <button
+                class:list={['hero__point', { 'est-actif': i === 0 }]}
+                type="button"
+                data-index={i}
+                aria-label={`Vidéo ${i + 1} — ${v.titre}`}
+              />
+            ))
+          }
+        </div>
       </div>
     </div>
   </section>
@@ -87,7 +133,7 @@ const badgesMeta = menu.badges as Record<string, { emoji: string; label: string 
   <section class="section" aria-labelledby="titre-univers">
     <div class="contenu">
       <p class="surtitre">La maison</p>
-      <h2 id="titre-univers">Trois façons de se régaler</h2>
+      <h2 id="titre-univers">Deux façons de se régaler</h2>
       <div class="univers">
         {
           univers.map((u) => (
@@ -259,12 +305,82 @@ const badgesMeta = menu.badges as Record<string, { emoji: string; label: string 
     color: #fff;
   }
 
-  .hero__logo {
-    color: var(--encre);
-    --logo-contraste: var(--creme);
-    filter: drop-shadow(0 18px 35px rgb(0 0 0 / 0.35));
-    max-width: 24rem;
+  .hero__video {
+    position: relative;
+    width: min(100%, 17rem);
+    aspect-ratio: 9 / 16;
     margin-inline: auto;
+    border-radius: var(--rayon-l);
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 18px 45px rgb(0 0 0 / 0.45);
+  }
+
+  .hero__clip {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 600ms ease;
+  }
+
+  .hero__clip.est-actif {
+    opacity: 1;
+  }
+
+  .hero__son {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    z-index: 2;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.55);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background var(--transition);
+  }
+
+  .hero__son:hover,
+  .hero__son:focus-visible {
+    background: rgb(0 0 0 / 0.8);
+  }
+
+  .hero__points {
+    position: absolute;
+    bottom: 0.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    gap: 0.45rem;
+  }
+
+  .hero__point {
+    width: 0.55rem;
+    height: 0.55rem;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.45);
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+  }
+
+  .hero__point:hover {
+    background: rgb(255 255 255 / 0.75);
+  }
+
+  .hero__point.est-actif {
+    background: #fff;
+    transform: scale(1.25);
   }
 
   @media (max-width: 52rem) {
@@ -277,8 +393,8 @@ const badgesMeta = menu.badges as Record<string, { emoji: string; label: string 
       justify-content: center;
     }
 
-    .hero__logo {
-      max-width: 15rem;
+    .hero__video {
+      width: min(100%, 12.5rem);
       order: -1;
     }
   }
@@ -463,3 +579,95 @@ const badgesMeta = menu.badges as Record<string, { emoji: string; label: string 
     margin-bottom: var(--esp-s);
   }
 </style>
+
+<script>
+  // Carrousel vidéo du héro : les clips s'enchaînent en fondu toutes les
+  // 9 s, points de navigation, bouton son, pause hors écran.
+  const cadre = document.querySelector<HTMLElement>('.hero__video');
+  const clips = [...document.querySelectorAll<HTMLVideoElement>('.hero__clip')];
+  const points = [...document.querySelectorAll<HTMLButtonElement>('.hero__point')];
+  const boutonSon = document.querySelector<HTMLButtonElement>('.hero__son');
+
+  if (cadre && clips.length) {
+    const DUREE_CLIP = 9000;
+    const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let actif = 0;
+    let sonActif = false;
+    let visible = false;
+    let minuteur: number | undefined;
+
+    const majSon = () => {
+      clips.forEach((clip, i) => {
+        clip.muted = !(sonActif && i === actif);
+      });
+      if (boutonSon) {
+        boutonSon.setAttribute('aria-pressed', String(sonActif));
+        boutonSon.setAttribute('aria-label', sonActif ? 'Couper le son' : 'Activer le son');
+        boutonSon.querySelector('span')!.textContent = sonActif ? '🔊' : '🔇';
+      }
+    };
+
+    const afficher = (index: number) => {
+      clips[actif].pause();
+      clips[actif].classList.remove('est-actif');
+      points[actif]?.classList.remove('est-actif');
+      actif = (index + clips.length) % clips.length;
+      clips[actif].classList.add('est-actif');
+      points[actif]?.classList.add('est-actif');
+      majSon();
+      if (visible && !reduit) clips[actif].play().catch(() => {});
+      // Précharge le clip suivant pour une transition sans à-coup
+      const suivant = clips[(actif + 1) % clips.length];
+      if (suivant.preload !== 'auto') suivant.preload = 'auto';
+    };
+
+    const planifier = () => {
+      clearTimeout(minuteur);
+      if (reduit || !visible) return;
+      minuteur = window.setTimeout(() => {
+        afficher(actif + 1);
+        planifier();
+      }, DUREE_CLIP);
+    };
+
+    if (!reduit) {
+      const observateur = new IntersectionObserver(
+        ([entree]) => {
+          visible = entree.isIntersecting;
+          if (visible) {
+            clips[actif].play().catch(() => {});
+            planifier();
+          } else {
+            clips[actif].pause();
+            clearTimeout(minuteur);
+          }
+        },
+        { threshold: 0.25 }
+      );
+      observateur.observe(cadre);
+    }
+
+    // Un clic sur la vidéo met en pause / relance (et sert de lecture
+    // manuelle quand les animations sont réduites)
+    clips.forEach((clip) => {
+      clip.addEventListener('click', () => {
+        if (clip.paused) clip.play().catch(() => {});
+        else clip.pause();
+      });
+    });
+
+    points.forEach((point, i) => {
+      point.addEventListener('click', () => {
+        afficher(i);
+        if (reduit) clips[actif].play().catch(() => {});
+        planifier();
+      });
+    });
+
+    boutonSon?.addEventListener('click', () => {
+      sonActif = !sonActif;
+      majSon();
+      if (sonActif) clips[actif].play().catch(() => {});
+    });
+  }
+</script>

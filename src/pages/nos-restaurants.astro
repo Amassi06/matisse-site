@@ -3,8 +3,10 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import CtaCommander from '../components/CtaCommander.astro';
 import infos from '../data/infos.json';
-import photoDevanture from '../assets/photos/devanture-paris.webp';
+import photoParis from '../assets/photos/Matisse P1.jpeg';
+import photoIvry from '../assets/photos/Matisse P9.jpeg';
 import { estRempli } from '../lib/utils';
+import type { ImageMetadata } from 'astro';
 
 const titre = 'Nos restaurants — Matisse Paris 14e (Alésia) & Ivry-sur-Seine';
 const description =
@@ -24,6 +26,20 @@ const reseaux = [
   { nom: 'Facebook', url: infos.reseaux.facebook },
   { nom: 'TikTok', url: infos.reseaux.tiktok },
 ];
+
+// Photo d'illustration de chaque restaurant (recadrée en 4/3 côté CSS)
+const photosRestos: Record<string, { src: ImageMetadata; alt: string; position: string }> = {
+  'paris-14': {
+    src: photoParis,
+    alt: 'La devanture du restaurant Matisse, 60 avenue du Général Leclerc à Paris 14e',
+    position: '50% 45%',
+  },
+  ivry: {
+    src: photoIvry,
+    alt: 'Berliner, smash burger, frites et citronnade maison sur une table du Matisse Ivry',
+    position: '50% 45%',
+  },
+};
 ---
 
 <Base titre={titre} description={description}>
@@ -72,16 +88,7 @@ const reseaux = [
           </div>
 
           <div class="resto__carte">
-            {
-              resto.id === 'paris-14' && (
-                <Image
-                  src={photoDevanture}
-                  alt="La devanture du restaurant Matisse, 60 avenue du Général Leclerc à Paris 14e"
-                  width={900}
-                  class="resto__photo"
-                />
-              )
-            }
+           
             <iframe
               src={carteEmbed(resto)}
               width="600"
@@ -183,6 +190,8 @@ const reseaux = [
   .resto__carte :global(.resto__photo) {
     width: 100%;
     height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
     border-radius: var(--rayon-l);
     box-shadow: var(--ombre);
     margin-bottom: var(--esp-s);
